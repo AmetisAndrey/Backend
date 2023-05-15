@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String 
+  email String?  @unique
+  image String?
+  emailVerified DateTime?
+  hashPassword String?
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  favoriteId String[] @db.ObjectId
+  accounts Account[]
+  session Session[]
+
+}
+
+model Movie{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  rating Int?
+  description String
+  genre String 
+  duration String?
+  videoUrl String
+  imageUrl String?
+}
+
+model Account{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user_id Int?
+  type String
+  email String?
+  provider String
+  providerAccountId String
+  refresh_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String? @db.String
+  session_state String?
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String @unique
+  userId String @db.ObjectId
+  expiresAt DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Verification{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  indentication String
+  token String @unique
+
+}
