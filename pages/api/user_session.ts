@@ -7,8 +7,8 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).end()
     }
     try{
-        const  {sessionUser} = await server(req)
-        return res.status(200).json(sessionUser)
+        const  {user} = await server(req)
+        return res.status(200).json(user)
     }
     catch(error){
         return res.status(400).json("Не найден пользователь")

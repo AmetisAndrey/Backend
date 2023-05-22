@@ -9,6 +9,13 @@ import Link from "next/link";
 const Auth = () => {
     const [swipelog, setSwipelog] = useState("login")
 
+    const [passwordShow, setPasswordShow] = useState(false)
+
+    const Togglepassword = () =>{
+        
+        setPasswordShow(!passwordShow)
+    }
+
     const formchange = () => {
         setSwipelog(i => i === "login" ? "register" : "login")
     }
@@ -52,7 +59,8 @@ const Auth = () => {
                             <Input label="Логин" id="login" onChange={(e:any) =>{setName(e.target.value)}} value={name}/>
                         }
                             <Input label="Почта" id="mail" onChange={(e:any) => {setEmail(e.target.value)}} value={email}/>
-                            <Input label="Пароль" type="password" id="password" onChange={(e:any) => {setPassword(e.target.value)}} value={password}/>
+                            <Input label="Пароль" type={passwordShow ? "text" : "password"} id="password" onChange={(e:any) => {setPassword(e.target.value)}} value={password}/>
+                            <button  className=" hover:text-white transition text-xl" onClick={Togglepassword}>Показать пароль</button>
                         </div>
                         <button className="bg-yellow-500 cursor-pointer p-2 text-white mt-5 w-full rounded-md hover:bg-white hover:text-black transition" onClick={swipelog === "login" ? login : register}>{swipelog === "login" ? "Войти" : "Зарегистрироваться"}</button>
                         <div className="mt-8 text-yellow-400 mb-2">Способы авторизации</div>

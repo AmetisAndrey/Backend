@@ -14,6 +14,7 @@ const server = async (req:NextApiRequest) => {
     if (!user){
         throw new Error("ошибка, не найден пользователь")
     }
+    console.log(session)
     return {user}
 }
 
